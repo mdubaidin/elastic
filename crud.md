@@ -127,3 +127,64 @@
     "age": 23
 }
 ```
+
+#### Update multiple docs with query
+
+`POST` student/\_update_by_query
+
+```json
+{
+    "query": {
+        "match_all": {}
+    },
+    "script": {
+        "source": "ctx._source.age++"
+    }
+} // The above query will update each doc's age
+```
+
+#### Delete multiple docs with query
+
+`POST` student/\_delete_by_query
+
+```json
+{
+    "query": {
+        "match_all": {}
+    }
+}
+```
+
+<hr style='height: 1px; background: rgba(255,255,255,0.3)' />
+
+### Bulk Api
+
+-   It is designed to be more efficient when dealing
+    with large volumes of data, as it reduces the
+    overhead of making individual requests for
+    each document.
+
+-   The actions can be index, create, update, or
+    delete, and the data contains the actual
+    document to be indexed or updated.
+
+#### Structure
+
+```
+{action:{}}
+{data}
+{action:{}}
+{data}
+```
+
+`POST` student/\_bulk
+
+```json
+{"index": {}}
+{"name":"Dinesh Kartik", "designation": "Indian Cricketer"}
+{"create":  {}}
+{"name":"Josh Hazlewood", "designation": "Australian Cricketer"}
+{"update": {"_id": "3mxugpMBcJInHYd--3K4"}}
+{"doc":{"age": 24}}
+{"delete":{"_id": "3WxqgpMBcJInHYd-lnKL"}}
+```
